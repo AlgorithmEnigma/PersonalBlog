@@ -1,5 +1,6 @@
 :root {
     --fs-xl: clamp(1rem, 8vw + 1rem, 6rem);
+    --fs-small: 1rem;
 }
 
 html,

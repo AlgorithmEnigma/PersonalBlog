@@ -1,8 +1,21 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
+import style from '../styles/index.module.css';
 import utilStyles from '../styles/utils.module.css';
+import { getSortedPostsData } from '../lib/posts';
+import Link from 'next/link';
+import Date from '../components/date';
 
-export default function Home() {
+export async function getStaticProps() {
+    const allPostsData = getSortedPostsData();
+    return {
+        props: {
+            allPostsData,
+        },
+    };
+}
+
+export default function Home({ allPostsData }) {
     return (
         <Layout home>
             <Head>
@@ -21,6 +34,27 @@ export default function Home() {
                     <a href="https://nextjs.org/learn">our Next.js tutorial</a>
                     .)
                 </p>
+            </section>
+
+            <section
+                className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}
+            >
+                <h2 className={utilStyles.headingLg}>Blog</h2>
+                <ul className={utilStyles.list}>
+                    {allPostsData.map(({ id, date, title, author }) => (
+                        <li className={utilStyles.listItem} key={id}>
+                            <Link href={`/posts/${id}`}>
+                                <a>{title}</a>
+                            </Link>
+                            <span
+                                className={`${utilStyles.lightText} ${utilStyles.subheading} ${style.metadata}`}
+                            >
+                                <Date dateString={date} />
+                                <p>Author: {author}</p>
+                            </span>
+                        </li>
+                    ))}
+                </ul>
             </section>
         </Layout>
     );
