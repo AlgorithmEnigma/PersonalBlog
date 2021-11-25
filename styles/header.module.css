@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    background-color: gray;
+    height: 100%;
+    width: 10%;
+}
+
+.header h2 {
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.header li {
+    list-style: none;
+}
